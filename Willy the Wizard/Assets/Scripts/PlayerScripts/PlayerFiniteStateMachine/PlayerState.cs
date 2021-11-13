@@ -24,13 +24,15 @@ public class PlayerState
     public virtual void Enter()
     {
         DoChecks();
+        player.Anim.SetBool(animBoolName, true);
         startTime = Time.time;
+        Debug.Log(animBoolName);
     }
 
     //Called when exiting a state
     public virtual void Exit()
     {
-
+        player.Anim.SetBool(animBoolName, false);
     }
 
     //Gets called every frame

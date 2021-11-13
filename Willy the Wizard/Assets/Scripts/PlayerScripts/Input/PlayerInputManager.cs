@@ -5,12 +5,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    private Vector2 moveInput;
+    public Vector2 RawMoveInput { get; private set; }
+    public int NormInputX { get; private set; }
+    public int NormInputY { get; private set; }
     
     public void OnMovementInput(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
-        Debug.Log(moveInput);
+        RawMoveInput = context.ReadValue<Vector2>();
+        NormInputX = (int)(RawMoveInput * Vector2.right).normalized.x;
+        NormInputY = (int)(RawMoveInput * Vector2.up).normalized.y;
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
