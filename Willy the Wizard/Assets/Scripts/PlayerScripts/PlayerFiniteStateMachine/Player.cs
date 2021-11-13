@@ -1,0 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    public PlayerStateMachine StateMachine { get; private set; }
+
+    public void Awake()
+    {
+        StateMachine = new PlayerStateMachine();
+    }
+
+    public void Start()
+    {
+        //To Do: Initialize statemachine
+    }
+
+    private void Update()
+    {
+        StateMachine.CurrentState.LogicUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        StateMachine.CurrentState.PhysicsUpdate();
+    }
+}
