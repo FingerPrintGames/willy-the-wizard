@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     public PlayerStateMachine StateMachine { get; private set; }
     public PlayerIdleState IdleState { get; private set; }
     public PlayerRunState RunState { get; private set; }
+    public PlayerJumpState JumpState { get; private set; }
+    public PlayerInAirState InAirState { get; private set; }
+    public PlayerLandState LandState { get; private set;  }
     #endregion
 
     #region Components
@@ -15,6 +18,10 @@ public class Player : MonoBehaviour
     public PlayerInputManager InputManager { get; private set; }
     public Rigidbody2D Body { get; private set; }
     [SerializeField] private PlayerData playerData;
+    #endregion
+
+    #region Check Transforms
+    [SerializeField]private Transform groundCheck;
     #endregion
 
     #region Other Variables
@@ -29,6 +36,9 @@ public class Player : MonoBehaviour
         StateMachine = new PlayerStateMachine();
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
         RunState = new PlayerRunState(this, StateMachine, playerData, "running");
+        JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
+        InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
+        LandState = new PlayerLandState(this, StateMachine, playerData, "land");
     }
 
     public void Start()
@@ -60,17 +70,33 @@ public class Player : MonoBehaviour
         Body.velocity = workspace;
         CurrentVelocity = workspace;
     }
+
+    public void SetVelocityY(float velocity)
+    {
+        workspace.Set(CurrentVelocity.x, velocity);
+        Body.velocity = workspace;
+        CurrentVelocity = workspace;
+    }
     #endregion
 
     #region Check Functions
+    public bool CheckIfOnTheGround()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
+    }
+    
     public void CheckIfShouldFlip(int xInput)
     {
         if (xInput != 0 && xInput != FacingDir)
             Flip();
     }
+
     #endregion
 
     #region Other Functions
+    private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
+    private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
+    
     private void Flip()
     {
         FacingDir *= -1;

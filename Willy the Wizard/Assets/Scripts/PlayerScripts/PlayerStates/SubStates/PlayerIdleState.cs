@@ -16,6 +16,7 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.InputManager.SetJumpFalse();
         player.SetVelocityX(0f);
     }
 

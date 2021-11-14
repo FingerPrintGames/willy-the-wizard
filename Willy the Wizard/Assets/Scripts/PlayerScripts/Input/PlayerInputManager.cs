@@ -8,7 +8,16 @@ public class PlayerInputManager : MonoBehaviour
     public Vector2 RawMoveInput { get; private set; }
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
-    
+    public bool JumpInput { get; private set; }
+
+    [SerializeField] private float inputHoldTime = 0.2f;
+    private float jumpInputStartTime;
+
+    private void Update()
+    {
+        CheckJumpInputHoldTime();
+    }
+
     public void OnMovementInput(InputAction.CallbackContext context)
     {
         RawMoveInput = context.ReadValue<Vector2>();
@@ -19,11 +28,22 @@ public class PlayerInputManager : MonoBehaviour
     public void OnJumpInput(InputAction.CallbackContext context)
     {
         if (context.started)
-            Debug.Log("Jump was pressed.");
-        if (context.performed)
-            Debug.Log("Jump is being held.");
-        if (context.canceled)
-            Debug.Log("Jump was let go.");
+        {
+            JumpInput = true;
+            jumpInputStartTime = Time.time;
+        }
+    }
+
+    public void SetJumpFalse() => JumpInput = false;
+
+
+    public void CheckJumpInputHoldTime()
+    {
+        if (Time.time >= jumpInputStartTime + inputHoldTime)
+        {
+            JumpInput = false;
+        }
+
     }
 
     public void OnAttackInput(InputAction.CallbackContext context)
