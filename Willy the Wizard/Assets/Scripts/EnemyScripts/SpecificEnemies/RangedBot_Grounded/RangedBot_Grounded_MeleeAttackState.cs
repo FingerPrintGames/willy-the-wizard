@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedBot_Grounded_ChargeState : EnemyChargeState
+public class RangedBot_Grounded_MeleeAttackState : EnemyMeleeAttackState
 {
     private RangedBot_Grounded rangedBot;
-
-    public RangedBot_Grounded_ChargeState(Enemy enemy, EnemyFiniteStateMachine stateMachine, string animBoolName, 
-    D_EnemyCharge stateData, RangedBot_Grounded rangedBot) : base(enemy, stateMachine, animBoolName, stateData)
+    public RangedBot_Grounded_MeleeAttackState(Enemy enemy, EnemyFiniteStateMachine stateMachine, 
+    string animBoolName, Transform attackPosition, D_EnemyMeleeAttack stateData, 
+    RangedBot_Grounded rangedBot) : base(enemy, stateMachine, animBoolName, attackPosition, stateData)
     {
         this.rangedBot = rangedBot;
     }
@@ -27,18 +27,15 @@ public class RangedBot_Grounded_ChargeState : EnemyChargeState
         base.Exit();
     }
 
+    public override void FinishAttack()
+    {
+        base.FinishAttack();
+    }
+
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (!isDetectingLedge || isDetectingWall)
-        {
-            stateMachine.ChangeState(rangedBot.LookForPlayerState);
-        }
-        if (performCloseRangeAction)
-        {
-            stateMachine.ChangeState(rangedBot.MeleeAttackState);
-        }
-        else if (isChargeTimeOver)
+        if (isAnimationFinished)
         {
             if (isPlayerInMinAgroRange)
             {
@@ -51,5 +48,10 @@ public class RangedBot_Grounded_ChargeState : EnemyChargeState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+    }
+
+    public override void TriggerAttack()
+    {
+        base.TriggerAttack();
     }
 }

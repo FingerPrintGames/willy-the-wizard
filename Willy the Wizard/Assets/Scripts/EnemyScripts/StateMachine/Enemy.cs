@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D EBody { get; private set; }
     public Animator EAnimator { get; private set; }
     public GameObject AliveGO { get; private set; }
+    public AnimationToStateMachine AnimToSM { get; private set; }
 
     [SerializeField] private Transform wallCheck;
     [SerializeField] private Transform ledgeCheck;
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
         AliveGO = transform.Find("Alive").gameObject;
         EBody = AliveGO.GetComponent<Rigidbody2D>();
         EAnimator = AliveGO.GetComponent<Animator>();
+        AnimToSM = AliveGO.GetComponent<AnimationToStateMachine>();
 
         stateMachine = new EnemyFiniteStateMachine();
     }
@@ -46,22 +48,32 @@ public class Enemy : MonoBehaviour
 
     public virtual bool CheckWall()
     {
-        return Physics2D.Raycast(wallCheck.position, AliveGO.transform.right, enemyData.wallCheckDistance, enemyData.whatIsGround);
+        return Physics2D.Raycast(wallCheck.position, AliveGO.transform.right, 
+        enemyData.wallCheckDistance, enemyData.whatIsGround);
     }
 
     public virtual bool CheckLedge()
     {
-        return Physics2D.Raycast(ledgeCheck.position, Vector2.down, enemyData.ledgeCheckDistance, enemyData.whatIsGround);
+        return Physics2D.Raycast(ledgeCheck.position, Vector2.down, 
+        enemyData.ledgeCheckDistance, enemyData.whatIsGround);
     }
 
     public virtual bool CheckPlayerInMinAgroRange()
     {
-        return Physics2D.Raycast(playerCheck.position, AliveGO.transform.right, enemyData.minAgroDistance, enemyData.whatIsPlayer);
+        return Physics2D.Raycast(playerCheck.position, AliveGO.transform.right, 
+        enemyData.minAgroDistance, enemyData.whatIsPlayer);
     }
 
     public virtual bool CheckPlayerInMaxAgroRange()
     {
-        return Physics2D.Raycast(playerCheck.position, AliveGO.transform.right, enemyData.maxAgroDistance, enemyData.whatIsPlayer);
+        return Physics2D.Raycast(playerCheck.position, AliveGO.transform.right, 
+        enemyData.maxAgroDistance, enemyData.whatIsPlayer);
+    }
+
+    public virtual bool CheckPlayerInCloseRangeAction()
+    {
+        return Physics2D.Raycast(playerCheck.position, AliveGO.transform.right, 
+        enemyData.closeRangeActionDistance, enemyData.whatIsPlayer);
     }
 
     public virtual void Flip()
@@ -74,5 +86,8 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.DrawLine(wallCheck.position, wallCheck.position + (Vector3)(Vector2.right * FacingDirection * enemyData.wallCheckDistance));
         Gizmos.DrawLine(ledgeCheck.position, ledgeCheck.position + (Vector3)(Vector2.down * enemyData.ledgeCheckDistance));
+        Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * FacingDirection * enemyData.closeRangeActionDistance), 0.2f);
+        Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * FacingDirection * enemyData.minAgroDistance), 0.2f);
+        Gizmos.DrawWireSphere(playerCheck.position + (Vector3)(Vector2.right * FacingDirection * enemyData.maxAgroDistance), 0.2f);
     }
 }

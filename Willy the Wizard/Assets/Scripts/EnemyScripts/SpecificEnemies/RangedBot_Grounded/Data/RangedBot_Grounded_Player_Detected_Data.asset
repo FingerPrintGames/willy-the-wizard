@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b73d0aaa8cebab84fb5aaef3be1bf684, type: 3}
   m_Name: RangedBot_Grounded_Player_Detected_Data
   m_EditorClassIdentifier: 
+  longRangeActionTime: 0.5

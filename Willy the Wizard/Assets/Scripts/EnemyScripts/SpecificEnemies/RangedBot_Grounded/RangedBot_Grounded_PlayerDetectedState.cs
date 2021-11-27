@@ -25,7 +25,11 @@ public class RangedBot_Grounded_PlayerDetectedState : PlayerDetectedState
     {
         base.LogicUpdate();
 
-        if (performLongRangeAction)
+        if (performCloseRangeAction)
+        {
+            stateMachine.ChangeState(rangedBot.MeleeAttackState);
+        }
+        else if (performLongRangeAction)
         {
             stateMachine.ChangeState(rangedBot.ChargeState);
         }
