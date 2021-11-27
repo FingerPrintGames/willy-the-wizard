@@ -21,6 +21,7 @@ public class EnemyState
     {
         startTime = Time.time;
         enemy.EAnimator.SetBool(animBoolName, true);
+        DoChecks();
     }
 
     public virtual void Exit()
@@ -34,6 +35,11 @@ public class EnemyState
     }
 
     public virtual void PhysicsUpdate()
+    {
+        DoChecks();
+    }
+
+    public virtual void DoChecks()
     {
 
     }

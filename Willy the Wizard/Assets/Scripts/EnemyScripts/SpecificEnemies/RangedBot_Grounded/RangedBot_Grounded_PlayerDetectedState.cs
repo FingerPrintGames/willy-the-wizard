@@ -25,10 +25,13 @@ public class RangedBot_Grounded_PlayerDetectedState : PlayerDetectedState
     {
         base.LogicUpdate();
 
-        if (!isPlayerInMaxAgroRange)
+        if (performLongRangeAction)
         {
-            rangedBot.IdleState.SetFlipAfterIdle(false);
-            stateMachine.ChangeState(rangedBot.IdleState);
+            stateMachine.ChangeState(rangedBot.ChargeState);
+        }
+        else if (!isPlayerInMaxAgroRange)
+        {
+            stateMachine.ChangeState(rangedBot.LookForPlayerState);
         }
     }
 

@@ -15,12 +15,12 @@ public class EnemyIdleState : EnemyState
         this.stateData = stateData;
     }
 
+
     public override void Enter()
     {
         base.Enter();
         enemy.SetVelocity(0f);
         isIdleTimeOver = false;
-        isPlayerInMinAgroRange = enemy.CheckPlayerInMinAgroRange();
         SetRandomIdleTime();
     }
 
@@ -45,6 +45,10 @@ public class EnemyIdleState : EnemyState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+    }
+    public override void DoChecks()
+    {
+        base.DoChecks();
         isPlayerInMinAgroRange = enemy.CheckPlayerInMinAgroRange();
     }
 

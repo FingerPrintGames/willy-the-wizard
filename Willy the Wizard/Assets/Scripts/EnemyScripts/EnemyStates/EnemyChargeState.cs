@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMoveState : EnemyState
+public class EnemyChargeState : EnemyState
 {
-    protected D_EnemyMove stateData;
-    protected bool isDetectingWall;
-    protected bool isDetectingLedge;
+    protected D_EnemyCharge stateData;
     protected bool isPlayerInMinAgroRange;
-    
-    public EnemyMoveState(Enemy enemy, EnemyFiniteStateMachine stateMachine, string animBoolName, D_EnemyMove stateData) : base(enemy, stateMachine, animBoolName)
+    protected bool isDetectingLedge;
+    protected bool isDetectingWall;
+    protected bool isChargeTimeOver;
+
+    public EnemyChargeState(Enemy enemy, EnemyFiniteStateMachine stateMachine, string animBoolName, 
+    D_EnemyCharge stateData) : base(enemy, stateMachine, animBoolName)
     {
         this.stateData = stateData;
     }
@@ -17,7 +19,8 @@ public class EnemyMoveState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.SetVelocity(stateData.movementSpeed);
+        enemy.SetVelocity(stateData.chargeSpeed);
+        isChargeTimeOver = false;
     }
 
     public override void Exit()
@@ -28,6 +31,10 @@ public class EnemyMoveState : EnemyState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (Time.time >= startTime + stateData.chargeTime)
+        {
+            isChargeTimeOver = true;
+        }
     }
 
     public override void PhysicsUpdate()
@@ -37,8 +44,8 @@ public class EnemyMoveState : EnemyState
     public override void DoChecks()
     {
         base.DoChecks();
+        isPlayerInMinAgroRange = enemy.CheckPlayerInMinAgroRange();
         isDetectingLedge = enemy.CheckLedge();
         isDetectingWall = enemy.CheckWall();
-        isPlayerInMinAgroRange = enemy.CheckPlayerInMinAgroRange();
     }
 }
