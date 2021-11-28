@@ -15,8 +15,14 @@ MonoBehaviour:
   moveSpeed: 7
   jumpForce: 10
   amountOfJumps: 1
+  meleeAttackCooldown: 0.5
+  meleeAttackDamage: 20
+  meleeAttackRadius: 0.5
   coyoteTime: 0.05
   groundCheckRadius: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
+  whatIsDamageable:
+    serializedVersion: 2
+    m_Bits: 1024

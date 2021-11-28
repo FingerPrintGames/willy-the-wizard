@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     public PlayerJumpState JumpState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
     public PlayerLandState LandState { get; private set;  }
+    public PlayerAttackState PrimaryAttackState { get; private set; }
+    public PlayerAttackState SecondaryAttackState { get; private set; }
     #endregion
 
     #region Components
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     public PlayerInputManager InputManager { get; private set; }
     public Rigidbody2D Body { get; private set; }
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private Transform meleeAttackPosition;
     #endregion
 
     #region Check Transforms
@@ -39,6 +42,8 @@ public class Player : MonoBehaviour
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "inAir");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
+        PrimaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
+        SecondaryAttackState = new PlayerAttackState(this, StateMachine, playerData, "attack");
     }
 
     public void Start()

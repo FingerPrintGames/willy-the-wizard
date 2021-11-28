@@ -37,14 +37,29 @@ public class PlayerInAirState : PlayerState
         xInput = player.InputManager.NormInputX;
         jumpInput = player.InputManager.JumpInput;
 
-        if (isGrounded && player.CurrentVelocity.y < 0.01f)
+        //Attacking
+        if (player.InputManager.AttackInputs[(int)CombatInputs.primary])
+        {
+            stateMachine.ChangeState(player.PrimaryAttackState);
+        }
+        else if (player.InputManager.AttackInputs[(int)CombatInputs.secondary])
+        {
+            stateMachine.ChangeState(player.SecondaryAttackState);
+        }
+
+        //Landing
+        else if (isGrounded && player.CurrentVelocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
         }
+        
+        //Jumping
         else if (jumpInput && player.JumpState.CanJump())
         {
             stateMachine.ChangeState(player.JumpState);
         }
+        
+        //Moving in air
         else
         {
             player.CheckIfShouldFlip(xInput);

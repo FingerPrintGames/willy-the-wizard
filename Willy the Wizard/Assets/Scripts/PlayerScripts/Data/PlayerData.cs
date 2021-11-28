@@ -12,10 +12,16 @@ public class PlayerData : ScriptableObject
     public float jumpForce = 10f;
     public int amountOfJumps = 1;
 
+    [Header("Melee Attack State")]
+    public float meleeAttackCooldown = 0.5f;
+    public float meleeAttackDamage = 20f;
+    public float meleeAttackRadius = 0.5f;
+
     [Header("In Air State")]
     public float coyoteTime = 0.2f;
 
     [Header("Check Variables")]
     public float groundCheckRadius = 0.05f;
     public LayerMask whatIsGround;
+    public LayerMask whatIsDamageable;
 }
