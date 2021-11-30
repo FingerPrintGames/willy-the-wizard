@@ -19,8 +19,9 @@ public class Player : MonoBehaviour
     public Animator Anim { get; private set; }
     public PlayerInputManager InputManager { get; private set; }
     public Rigidbody2D Body { get; private set; }
+    public PlayerInventory Inventory { get; private set; }
+
     [SerializeField] private PlayerData playerData;
-    [SerializeField] private Transform meleeAttackPosition;
     #endregion
 
     #region Check Transforms
@@ -51,7 +52,11 @@ public class Player : MonoBehaviour
         Anim = GetComponent<Animator>();
         InputManager = GetComponent<PlayerInputManager>();
         Body = GetComponent<Rigidbody2D>();
+        Inventory = GetComponent<PlayerInventory>();
         FacingDir = 1;
+
+        PrimaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
+        //SecondaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
 
         StateMachine.Initialize(IdleState);
     }

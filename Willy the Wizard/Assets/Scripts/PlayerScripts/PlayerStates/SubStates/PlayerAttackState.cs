@@ -4,7 +4,73 @@ using UnityEngine;
 
 public class PlayerAttackState : PlayerAbilityState
 {
+    private Weapon weapon;
+
+    private int xInput;
+
+    private float velocityToSet;
+
+    private bool setVelocity;
+    private bool shouldCheckFlip;
+    
     public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        setVelocity = false;
+        shouldCheckFlip = true;
+
+        weapon.EnterWeapon();
+    }
+
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        xInput = player.InputManager.NormInputX;
+        if (shouldCheckFlip) player.CheckIfShouldFlip(xInput);
+
+        if (setVelocity)
+        {
+            player.SetVelocityX(velocityToSet * player.FacingDir);
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        weapon.ExitWeapon();
+    }
+
+    public void SetWeapon(Weapon weapon)
+    {
+        this.weapon = weapon;
+        weapon.InitializeWeapon(this);
+    }
+
+    public void SetPlayerVelocity(float velocity)
+    {
+        player.SetVelocityX(velocity * player.FacingDir);
+        velocityToSet = velocity;
+        setVelocity = true;
+    }
+
+    public void SetFlipCheck(bool value)
+    {
+        shouldCheckFlip = value;
+    }
+
+    #region Animation Triggers
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
+        isAbilityDone = true;
+    }
+
+    #endregion
 }
