@@ -21,7 +21,7 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 7496900934711881080, guid: 63335929f7022b749ac5a38c26c14a86, type: 3}
-    - time: 0.1
+    - time: 0.13333334
       value: {fileID: -2602125055432953497, guid: 63335929f7022b749ac5a38c26c14a86, type: 3}
     - time: 0.2
       value: {fileID: -3295486346003925253, guid: 63335929f7022b749ac5a38c26c14a86, type: 3}
@@ -52,7 +52,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.25
+    m_StopTime: 0.26666668
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -79,21 +79,28 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.1
+  - time: 0.11666667
+    functionName: AnimationActionTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.13333334
     functionName: AnimationStartMovementTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.23333333
+  - time: 0.25
     functionName: AnimationStopMovementTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
+  - time: 0.26666668
     functionName: AnimationFinishTrigger
     data: 
     objectReferenceParameter: {fileID: 0}

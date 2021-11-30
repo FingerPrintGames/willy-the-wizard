@@ -20,23 +20,16 @@ public class Player : MonoBehaviour
     public PlayerInputManager InputManager { get; private set; }
     public Rigidbody2D Body { get; private set; }
     public PlayerInventory Inventory { get; private set; }
+    public Core Core { get; private set; }
 
     [SerializeField] private PlayerData playerData;
-    #endregion
-
-    #region Check Transforms
-    [SerializeField]private Transform groundCheck;
-    #endregion
-
-    #region Other Variables
-    public Vector2 CurrentVelocity { get; private set; }
-    public int FacingDir { get; private set; }
-    private Vector2 workspace;
     #endregion
 
     #region Unity Callback Functions
     public void Awake()
     {
+        Core = GetComponentInChildren<Core>();
+
         StateMachine = new PlayerStateMachine();
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
         RunState = new PlayerRunState(this, StateMachine, playerData, "running");
@@ -53,7 +46,6 @@ public class Player : MonoBehaviour
         InputManager = GetComponent<PlayerInputManager>();
         Body = GetComponent<Rigidbody2D>();
         Inventory = GetComponent<PlayerInventory>();
-        FacingDir = 1;
 
         PrimaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
         //SecondaryAttackState.SetWeapon(Inventory.weapons[(int)CombatInputs.primary]);
@@ -63,7 +55,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        CurrentVelocity = Body.velocity;
+        Core.LogicUpdate();
         StateMachine.CurrentState.LogicUpdate();
     }
 
@@ -73,44 +65,8 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    #region Set Functions
-    public void SetVelocityX(float velocity)
-    {
-        workspace.Set(velocity, CurrentVelocity.y);
-        Body.velocity = workspace;
-        CurrentVelocity = workspace;
-    }
-
-    public void SetVelocityY(float velocity)
-    {
-        workspace.Set(CurrentVelocity.x, velocity);
-        Body.velocity = workspace;
-        CurrentVelocity = workspace;
-    }
-    #endregion
-
-    #region Check Functions
-    public bool CheckIfOnTheGround()
-    {
-        return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
-    }
-    
-    public void CheckIfShouldFlip(int xInput)
-    {
-        if (xInput != 0 && xInput != FacingDir)
-            Flip();
-    }
-
-    #endregion
-
     #region Other Functions
     private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
     private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-    
-    private void Flip()
-    {
-        FacingDir *= -1;
-        transform.Rotate(0.0f, 180.0f, 0.0f);
-    }
     #endregion
 }

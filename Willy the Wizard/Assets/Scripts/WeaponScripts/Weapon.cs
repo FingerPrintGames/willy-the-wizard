@@ -8,11 +8,11 @@ public class Weapon : MonoBehaviour
     protected Animator weaponAnimator;
     protected PlayerAttackState state;
 
-    [SerializeField] private SO_WeaponData weaponData;
+    [SerializeField] protected SO_WeaponData weaponData;
 
     protected int attackCounter;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         baseAnimator = transform.Find("Base").GetComponent<Animator>();
         weaponAnimator = transform.Find("Weapon").GetComponent<Animator>();
@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour
     {
         gameObject.SetActive(true);
 
-        if (attackCounter >= weaponData.movementSpeed.Length) attackCounter = 0; 
+        if (attackCounter >= weaponData.amountOfAttacks) attackCounter = 0; 
         
         baseAnimator.SetBool("attack", true);
         weaponAnimator.SetBool("attack", true);
@@ -68,6 +68,11 @@ public class Weapon : MonoBehaviour
     public virtual void AnimationTurnOnFlipTrigger()
     {
         state.SetFlipCheck(true);
+    }
+
+    public virtual void AnimationActionTrigger()
+    {
+        
     }
 
     #endregion

@@ -50,9 +50,10 @@ public class EnemyMeleeAttackState : EnemyAttackState
         Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, 
         stateData.attackRadius, stateData.whatIsPlayer);
 
-        foreach (Collider2D detectedObject in detectedObjects)
+        /*foreach (Collider2D detectedObject in detectedObjects)
         {
             detectedObject.transform.SendMessage("Damage", attackDetails);
         }
+        */
     }
 }

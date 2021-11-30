@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
         velocityWorkspace.Set(FacingDirection * velocity, EBody.velocity.y);
         EBody.velocity = velocityWorkspace;
     }
-
+    #region Check Functions
     public virtual bool CheckWall()
     {
         return Physics2D.Raycast(wallCheck.position, AliveGO.transform.right, 
@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
         return Physics2D.Raycast(playerCheck.position, AliveGO.transform.right, 
         enemyData.closeRangeActionDistance, enemyData.whatIsPlayer);
     }
-
+    #endregion
     public virtual void Flip()
     {
         FacingDirection *= -1;

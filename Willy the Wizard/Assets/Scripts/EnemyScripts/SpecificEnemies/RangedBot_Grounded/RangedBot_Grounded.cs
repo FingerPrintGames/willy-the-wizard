@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedBot_Grounded : Enemy
+public class RangedBot_Grounded : Enemy, IDamageable
 {
     public RangedBot_Grounded_IdleState IdleState { get; private set; }
     public RangedBot_Grounded_MoveState MoveState { get; private set; }
@@ -32,6 +32,8 @@ public class RangedBot_Grounded : Enemy
 
         stateMachine.Initialize(MoveState);
     }
+
+    public void Damage(float amount) { Debug.Log(amount + "damage taken."); }
 
     public override void OnDrawGizmos()
     {

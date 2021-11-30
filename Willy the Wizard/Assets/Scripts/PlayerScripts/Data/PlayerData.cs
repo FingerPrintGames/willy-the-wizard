@@ -21,7 +21,5 @@ public class PlayerData : ScriptableObject
     public float coyoteTime = 0.2f;
 
     [Header("Check Variables")]
-    public float groundCheckRadius = 0.05f;
-    public LayerMask whatIsGround;
     public LayerMask whatIsDamageable;
 }

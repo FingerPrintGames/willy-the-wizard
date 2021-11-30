@@ -16,7 +16,7 @@ public class PlayerInAirState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
-        isGrounded = player.CheckIfOnTheGround();
+        isGrounded = core.CollisionSenses.Ground;
     }
 
     public override void Enter()
@@ -48,7 +48,7 @@ public class PlayerInAirState : PlayerState
         }
 
         //Landing
-        else if (isGrounded && player.CurrentVelocity.y < 0.01f)
+        else if (isGrounded && core.Movement.CurrentVelocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
         }
@@ -62,9 +62,9 @@ public class PlayerInAirState : PlayerState
         //Moving in air
         else
         {
-            player.CheckIfShouldFlip(xInput);
-            player.SetVelocityX(xInput * playerData.moveSpeed);
-            player.Anim.SetFloat("VelocityY", player.CurrentVelocity.y);
+            core.Movement.CheckIfShouldFlip(xInput);
+            core.Movement.SetVelocityX(xInput * playerData.moveSpeed);
+            player.Anim.SetFloat("VelocityY", core.Movement.CurrentVelocity.y);
         }
     }
 

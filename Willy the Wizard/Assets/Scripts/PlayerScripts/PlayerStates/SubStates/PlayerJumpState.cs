@@ -14,7 +14,7 @@ public class PlayerJumpState : PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocityY(playerData.jumpForce);
+        core.Movement.SetVelocityY(playerData.jumpForce);
         isAbilityDone = true;
         DecreaseJumpAmount();
         Debug.Log("jump force was applied");
