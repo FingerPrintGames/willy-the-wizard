@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyMeleeAttackState : EnemyAttackState
 {
     protected D_EnemyMeleeAttack stateData;
-    protected AttackDetails attackDetails;
 
     public EnemyMeleeAttackState(Enemy enemy, EnemyFiniteStateMachine stateMachine, string animBoolName, Transform attackPosition, D_EnemyMeleeAttack stateData) : base(enemy, stateMachine, animBoolName, attackPosition)
     {
@@ -20,8 +19,6 @@ public class EnemyMeleeAttackState : EnemyAttackState
     public override void Enter()
     {
         base.Enter();
-        attackDetails.attackDamage = stateData.meleeDamage;
-        attackDetails.position = enemy.AliveGO.transform.position;
     }
 
     public override void Exit()
@@ -50,10 +47,25 @@ public class EnemyMeleeAttackState : EnemyAttackState
         Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(attackPosition.position, 
         stateData.attackRadius, stateData.whatIsPlayer);
 
-        /*foreach (Collider2D detectedObject in detectedObjects)
+        foreach (Collider2D detectedObject in detectedObjects)
         {
-            detectedObject.transform.SendMessage("Damage", attackDetails);
+            IDamageable damageable = detectedObject.GetComponent<IDamageable>();
+
+            if (damageable != null)
+            {
+                damageable.Damage(stateData.meleeDamage);
+            }
         }
-        */
+
+        foreach (Collider2D detectedObject in detectedObjects)
+        {
+            IKnockback knockback = detectedObject.GetComponent<IKnockback>();
+
+            if (knockback != null)
+            {
+                knockback.Knockback(stateData.knockbackAngle, stateData.knockbackStrength, core.Movement.FacingDir);
+            }
+        }
+
     }
 }

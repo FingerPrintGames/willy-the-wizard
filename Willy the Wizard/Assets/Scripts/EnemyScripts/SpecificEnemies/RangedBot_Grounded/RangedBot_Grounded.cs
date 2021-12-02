@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedBot_Grounded : Enemy, IDamageable
+public class RangedBot_Grounded : Enemy
 {
     public RangedBot_Grounded_IdleState IdleState { get; private set; }
     public RangedBot_Grounded_MoveState MoveState { get; private set; }
@@ -20,20 +20,21 @@ public class RangedBot_Grounded : Enemy, IDamageable
 
     [SerializeField] private Transform meleeAttackPosition;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         MoveState = new RangedBot_Grounded_MoveState(this, stateMachine, "move", moveStateData, this);
         IdleState = new RangedBot_Grounded_IdleState(this, stateMachine, "idle", idleStateData, this);
         PlayerDetectedState = new RangedBot_Grounded_PlayerDetectedState(this, stateMachine, "playerDetected", playerDetectedStateData, this);
         ChargeState = new RangedBot_Grounded_ChargeState(this, stateMachine, "charge", enemyChargeStateData, this);
         LookForPlayerState = new RangedBot_Grounded_LookForPlayerState(this, stateMachine, "lookForPlayer", lookForPlayerStateData, this);
         MeleeAttackState = new RangedBot_Grounded_MeleeAttackState(this, stateMachine, "meleeAttack", meleeAttackPosition, meleeAttackData, this);
-
-        stateMachine.Initialize(MoveState);
     }
 
-    public void Damage(float amount) { Debug.Log(amount + "damage taken."); }
+    private void Start()
+    {
+        stateMachine.Initialize(MoveState);      
+    }
 
     public override void OnDrawGizmos()
     {

@@ -6,6 +6,7 @@ public class EnemyState
 {
     protected EnemyFiniteStateMachine stateMachine;
     protected Enemy enemy;
+    protected Core core;
 
     protected float startTime;
     protected string animBoolName;
@@ -15,6 +16,7 @@ public class EnemyState
         this.enemy = enemy;
         this.stateMachine = stateMachine;
         this.animBoolName = animBoolName;
+        core = enemy.Core;
     }
 
     public virtual void Enter()

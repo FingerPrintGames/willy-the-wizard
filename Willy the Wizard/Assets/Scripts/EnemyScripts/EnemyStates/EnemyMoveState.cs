@@ -17,7 +17,7 @@ public class EnemyMoveState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.SetVelocity(stateData.movementSpeed);
+        core.Movement.SetVelocityX(stateData.movementSpeed * core.Movement.FacingDir);
     }
 
     public override void Exit()
@@ -37,8 +37,8 @@ public class EnemyMoveState : EnemyState
     public override void DoChecks()
     {
         base.DoChecks();
-        isDetectingLedge = enemy.CheckLedge();
-        isDetectingWall = enemy.CheckWall();
+        isDetectingLedge = core.CollisionSenses.CheckLedge;
+        isDetectingWall = core.CollisionSenses.CheckWall;
         isPlayerInMinAgroRange = enemy.CheckPlayerInMinAgroRange();
     }
 }

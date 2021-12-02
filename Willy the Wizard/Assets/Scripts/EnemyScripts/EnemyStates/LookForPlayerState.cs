@@ -34,7 +34,7 @@ public class LookForPlayerState : EnemyState
         lastTurnTime = startTime;
         amountOfTurnsDone = 0;
 
-        enemy.SetVelocity(0f);
+        core.Movement.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -47,7 +47,7 @@ public class LookForPlayerState : EnemyState
         base.LogicUpdate();
         if (turnImmediately)
         {
-            enemy.Flip();
+            core.Movement.Flip();
             lastTurnTime = Time.time;
             amountOfTurnsDone++;
             turnImmediately = false;
@@ -55,7 +55,7 @@ public class LookForPlayerState : EnemyState
         //If turn time is up but the enemy still has turns for searching
         else if (Time.time >= lastTurnTime + stateData.timeBetweenTurns && !areAllTurnsDone)
         {
-            enemy.Flip();
+            core.Movement.Flip();
             lastTurnTime = Time.time;
             amountOfTurnsDone++;
         }

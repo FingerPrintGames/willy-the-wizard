@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6f995aa581edd47beb507146a6d3f2, type: 3}
   m_Name: RustyPipe
   m_EditorClassIdentifier: 
-  movementSpeed:
-  - 1.5
   attackDetails:
   - attackName: Pipe Swing
     movementSpeed: 1.5
     damageAmount: 15
+    knockbackStrength: 15
+    knockbackAngle: {x: 1, y: 0}

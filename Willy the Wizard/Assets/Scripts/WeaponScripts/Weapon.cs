@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     protected Animator baseAnimator;
     protected Animator weaponAnimator;
     protected PlayerAttackState state;
+    protected Core core;
 
     [SerializeField] protected SO_WeaponData weaponData;
 
@@ -77,8 +78,9 @@ public class Weapon : MonoBehaviour
 
     #endregion
 
-    public void InitializeWeapon(PlayerAttackState state)
+    public void InitializeWeapon(PlayerAttackState state, Core core)
     {
         this.state = state;
+        this.core = core;
     }
 }

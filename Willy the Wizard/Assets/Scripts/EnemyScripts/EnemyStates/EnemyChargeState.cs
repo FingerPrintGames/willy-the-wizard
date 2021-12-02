@@ -20,7 +20,7 @@ public class EnemyChargeState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.SetVelocity(stateData.chargeSpeed);
+        core.Movement.SetVelocityX(stateData.chargeSpeed * core.Movement.FacingDir);
         isChargeTimeOver = false;
     }
 
@@ -46,8 +46,8 @@ public class EnemyChargeState : EnemyState
     {
         base.DoChecks();
         isPlayerInMinAgroRange = enemy.CheckPlayerInMinAgroRange();
-        isDetectingLedge = enemy.CheckLedge();
-        isDetectingWall = enemy.CheckWall();
+        isDetectingLedge = core.CollisionSenses.CheckLedge;
+        isDetectingWall = core.CollisionSenses.CheckWall;
         performCloseRangeAction = enemy.CheckPlayerInCloseRangeAction();
     }
 }

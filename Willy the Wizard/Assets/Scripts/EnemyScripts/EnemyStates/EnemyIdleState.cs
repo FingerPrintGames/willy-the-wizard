@@ -19,7 +19,7 @@ public class EnemyIdleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        enemy.SetVelocity(0f);
+        core.Movement.SetVelocityX(0f);
         isIdleTimeOver = false;
         SetRandomIdleTime();
     }
@@ -29,7 +29,7 @@ public class EnemyIdleState : EnemyState
         base.Exit();
         if (flipAfterIdle)
         {
-            enemy.Flip();
+            core.Movement.Flip();
         }
     }
 
