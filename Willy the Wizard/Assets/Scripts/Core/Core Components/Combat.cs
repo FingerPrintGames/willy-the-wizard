@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Combat : CoreComponent, IDamageable, IKnockback
 {
-    private bool isKnockbackActive;
+    public bool isKnockbackActive;
     
     public void LogicUpdate()
     {

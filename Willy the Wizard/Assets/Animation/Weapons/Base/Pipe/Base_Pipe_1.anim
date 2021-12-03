@@ -79,15 +79,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.11666667
-    functionName: AnimationActionTrigger
+  - time: 0.13333334
+    functionName: AnimationStartMovementTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.13333334
-    functionName: AnimationStartMovementTrigger
+  - time: 0.23333333
+    functionName: AnimationActionTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
